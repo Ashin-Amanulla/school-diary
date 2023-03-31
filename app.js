@@ -13,8 +13,8 @@ require('./config/init_mongodb.js') //DB initialisation
 // app.use(cors())
 // app.use(logger('dev'))
 app.use(express.json())
-// app.use(express.urlencoded({extended:true}))
-// app.use(compression())
+app.use(express.urlencoded({extended:true}))
+app.use(compression())
 
 app.use('/api/user', require('./routes/user'))
 app.use('/api/class', require('./routes/class'))
