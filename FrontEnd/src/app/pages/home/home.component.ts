@@ -7,7 +7,17 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  scroll(el:HTMLElement){
-    el.scrollIntoView({behavior:'smooth'});
+  navClick: boolean = false;
+
+  showNav() {
+    this.navClick = !this.navClick;
+  }
+
+  scroll(el: HTMLElement) {
+  
+    if(this.navClick){
+      this.navClick = false;
+    }
+    el.scrollIntoView({ behavior: 'smooth' });
   }
 }

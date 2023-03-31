@@ -1,7 +1,12 @@
 <!-- hero banner  -->
 
 <div class="bg-white">
+
+                                        <!-- *header  -->
+
   <header class="absolute inset-x-0 top-0 z-50">
+                                          <!-- *nav starts -->
+
     <nav
       class="flex items-center justify-between p-6 lg:px-8"
       aria-label="Global"
@@ -16,10 +21,11 @@
           />
         </a>
       </div>
+                                      <!-- *hamburg starts-->
       <div class="flex lg:hidden">
         <button
           type="button"
-          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" (click)="showNav()"
         >
           <span class="sr-only">Open main menu</span>
           <svg
@@ -38,39 +44,49 @@
           </svg>
         </button>
       </div>
+                                      <!-- *hamburg ends -->
+                                      <!-- *main menu starts -->
       <div class="hidden lg:flex lg:gap-x-12">
         <a
           (click)="scroll(features)"
-          class="text-sm font-semibold leading-6 text-gray-900"
+          class="text-base font-semibold leading-6 text-gray-900"
           >Features</a
         >
 
         <a
           (click)="scroll(price)"
-          class="text-sm font-semibold leading-6 text-gray-900"
+          class="text-base font-semibold leading-6 text-gray-900"
           >Pricing</a
         >
 
         <a
           (click)="scroll(contact)"
-          class="text-sm font-semibold leading-6 text-gray-900"
+          class="text-base font-semibold leading-6 text-gray-900"
           >Contact</a
         >
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <a
           routerLink="/login"
-          class="text-sm font-semibold leading-6 text-gray-900"
-          >Log in <span aria-hidden="true">&rarr;</span></a
+          class="text-base  leading-6 bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-full"
+          >Preview <span aria-hidden="true">&rarr;</span></a
         >
       </div>
+                                      <!-- *main menu ends -->
+
     </nav>
+                                          <!-- *nav ends -->
+
     <!-- Mobile menu, show/hide based on menu open state. -->
-    <div class="lg:hidden" role="dialog" aria-modal="true">
-      <!-- Background backdrop, show/hide based on slide-over state. -->
-      <div class="fixed inset-0 z-50"></div>
+                                          <!-- *mobile menu starts -->
+
+    <div class="lg:hidden"  role="dialog" aria-modal="true" *ngIf="navClick">
+      <!-- ?Background backdrop, show/hide based on slide-over state. -->
+      <div class="fixed inset-0 z-50" ></div>
+                                            <!-- *mobile menu div starts -->
+
       <div
-        class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10" *ngIf='navClick'
       >
         <div class="flex items-center justify-between">
           <a href="#" class="-m-1.5 p-1.5">
@@ -81,7 +97,8 @@
               alt=""
             />
           </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                                                <!-- *close button in mobile menu -->
+          <button type="button" (click)="showNav()" class="-m-2.5 rounded-md p-2.5 text-gray-700">
             <span class="sr-only">Close menu</span>
             <svg
               class="h-6 w-6"
@@ -99,6 +116,8 @@
             </svg>
           </button>
         </div>
+                                              <!-- *mobile menu list starts -->
+
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
@@ -122,18 +141,20 @@
             </div>
             <div class="py-6">
               <a
-                routerLink="/login"
-                class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >Log in</a
-              >
+              routerLink="/login"
+              class="text-base  leading-6 bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-full"
+              >Preview <span aria-hidden="true">&rarr;</span></a
+            >
             </div>
           </div>
         </div>
       </div>
+                                            <!-- *main menu list ends -->
+
     </div>
   </header>
 
-  <div class="relative isolate px-6 pt-14 lg:px-8">
+  <div class="relative isolate px-6  lg:px-8">
     <div
       class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
     >
@@ -161,8 +182,13 @@
         </defs>
       </svg>
     </div>
+
+                                          <!-- *banner starts -->
+
     <div class="mx-auto max-w-none py-32 sm:py-48 lg:py-56">
       <div class="grid grid-cols-2 gap-4 items-center ">
+                                              <!-- *banner hero heading  -->
+
         <div class="text-center">
           <h1
             class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
@@ -175,14 +201,16 @@
           </p>
           <div class="mt-10 flex items-center justify-center gap-x-6">
             <a
-              class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >Get started</a
-            >
-            <a class="text-sm font-semibold leading-6 text-gray-900"
-              >Learn more <span aria-hidden="true">→</span></a
+          routerLink="/login"
+          class="text-base  leading-6 bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-full"
+          >Preview </a
+        >
+            <a class="text-sm font-semibold leading-6 text-gray-900" (click)='scroll(contact)'
+              >Contact <span aria-hidden="true">→</span></a
             >
           </div>
         </div>
+                                      <!-- *banner hero image in svg -->
 
         <div>
           <svg
@@ -9357,7 +9385,7 @@
 <div class="bg-white py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <h2 class="text-centertext-lg font-semibold leading-8 text-gray-900">
-      Trusted by the world’s most innovative teams
+      Trusted by the world’s premier institutes
     </h2>
     <div
       class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
