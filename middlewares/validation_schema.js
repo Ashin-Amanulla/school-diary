@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 
 //Joi autherization schema
-const authJoi = Joi.object({
+const userJoi = Joi.object({
 
     email: Joi.string()
         .email()
@@ -17,7 +17,7 @@ const authJoi = Joi.object({
         .min(2)
         .required(),
 
-    role: Joi.string()
+    type: Joi.string()
         .required()
 
 })

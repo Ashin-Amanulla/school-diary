@@ -20,7 +20,7 @@ const circularSchema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['circular', 'events', 'assignment']
+        enum: ['circular', 'events','test','assignment']
     },
 
     class: {
@@ -28,10 +28,7 @@ const circularSchema = new Schema({
         required: true,
         // [general,class]
     },
-    // createdAt: {
-    //     type: Date,
-    //     default: Date.now
-    // },
+  
     createdBy: {
         type: String,
         // default: userId

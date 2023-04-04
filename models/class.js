@@ -7,18 +7,21 @@ const classSchema = new Schema({
         required: true
     },
     timeTable: {
-        required: false,
-        type: [
+              type: [
             {
                 day: {type: String, enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']},
                 timeStart: String,
                 timeEnd: String,
                 subject: String,
-                // teacherId: String 
+                teacherId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'user',
+                    required: false
+                }, 
             }
         ]
     },
-    teacherId: {
+    classTeacherId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: false

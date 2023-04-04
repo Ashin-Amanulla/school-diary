@@ -1,11 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContactComponent } from './units/contact/contact.component';
-import { HomeComponent } from './pages/home/home.component';
+
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'contact', component: ContactComponent }
+  
+  {
+    path: '',
+    loadChildren: () => import('./banner-page/banner-page.module').then(m => m.BannerPageModule),
+   },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    // canActivate: [AuthGuard, RoleGuard]
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({

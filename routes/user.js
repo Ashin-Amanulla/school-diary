@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
             res.status(400).send({message: errorMessage});
         }
         else {
+            
             const user = new User(data)
             let insertId = await user.save()
             res.status(201).send(insertId);

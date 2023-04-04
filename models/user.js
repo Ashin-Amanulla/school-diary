@@ -32,21 +32,21 @@ const userSchema = new Schema({
         }
     },
 
-    type: {
-        type: String,
-        required: true,
-        enum: ['student', 'teacher', 'admin']
-    },
+    // type: {
+    //     type: String,
+    //     required: true,
+    //     enum: ['student', 'teacher', 'admin']
+    // },
 
-    class: {
-        type: Array,
-        validate: {
-            validator: function (value) {
-                return (this.type !== 'admin' && value && value.length > 0) || this.type === 'admin' 
-            },
-            message: 'Field "class" required when user type not "admin"'
-        }
-    },
+    // class: {
+    //     type: Array,
+    //     validate: {
+    //         validator: function (value) {
+    //             return (this.type !== 'admin' && value && value.length > 0) || this.type === 'admin' 
+    //         },
+    //         message: 'Field "class" required when user type not "admin"'
+    //     }
+    // },
 
     father: {
         type: String,
