@@ -10,7 +10,7 @@ const pupilSchema = new Schema({
     address: { type: String },
     email: { type: String },
     password: { type: String },
-    image: { type: String },
+    photo: { type: String },
     parentName: { type: String },
     parentPhoneNumber: { type: String },
     emergencyName: { type: String },

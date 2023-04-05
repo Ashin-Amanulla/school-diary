@@ -13,11 +13,13 @@ import Swal from 'sweetalert2';
 export class PupilsComponent {
 
   nurseryStudentForm!: FormGroup;
+  selectedFile: any = null;
+  images: any;
+  ifUploaded: Boolean = false; //to ensure uploading is complete
+   fd:any = new FormData();
 
   passwordReg: string = ''
-  constructor(private fb: FormBuilder, private api: BackendService, private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private api: BackendService, private router: Router) {
     this.nurseryStudentForm = this.fb.group({
       fullName: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
@@ -25,7 +27,7 @@ export class PupilsComponent {
       address: [''],
       email: ['', Validators.required],
       password: ['', Validators.required],
-      image: [''],
+      // image: [null],
       parentName: ['', Validators.required],
       parentPhoneNumber: ['', Validators.required],
       emergencyName: ['', Validators.required],
@@ -33,12 +35,29 @@ export class PupilsComponent {
       emergencyRelationship: [''],
 
     });
+   }
+
+  //Image upload
+  passportPhoto(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFile = <File>event.target.files[0];
+      console.log(event.target.files)
+    }
   }
 
   onSubmit() {
-    const nurseryStudent: NurseryStudent = this.nurseryStudentForm.value;
-    this.api.addItem(nurseryStudent).subscribe((res: any) => {
-      if (res.status ) {
+    const nurseryStudent = this.nurseryStudentForm.value;
+    // append image and send data 
+    for (const prop in nurseryStudent) {
+      this.fd.append(prop, nurseryStudent[prop])
+    }
+
+    if(this.selectedFile) {
+      this.fd.append('image', this.selectedFile, this.selectedFile.name); //image appended last due to bug
+    }
+
+    this.api.addItem(this.fd).subscribe((res: any) => {
+      if (res.status) {
         Swal.fire({
           icon: 'success',
           title: ' Added Successfully',
@@ -59,8 +78,9 @@ export class PupilsComponent {
         })
       }
     })
-    // send the nursery student object to your backend API or perform any other action here
   }
+
+
 
   // to auto generate password 
   toPassword() {

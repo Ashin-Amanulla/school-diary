@@ -11,15 +11,23 @@ require('./config/init_mongodb.js') //DB initialisation
 
 
 //middleware
-app.use(helmet());
+// app.use(helmet());
 app.use(cors())
 app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
 app.use(compression())
+
+// for parsing application/json
+app.use(express.json())
+// for parsing application/xwww-form-urlencoded
+app.use(express.urlencoded({extended:true}))
+
+// for parsing multipart/form-data
+app.use(express.static('public'));
 
 
 // api 
+app.use('/api/uploads', express.static('uploads'))  // for image and pdf reading
+
 app.use('/api/pupils', require('./routes/pupils'))
 
 app.use('/api/user', require('./routes/user'))

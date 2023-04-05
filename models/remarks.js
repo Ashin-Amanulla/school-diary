@@ -1,37 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment')
 
 const remarksSchema = new Schema({
-    title: {
-        type: String,
-        required: true
-    },
+ 
 
-    message: {
+    review: {
         type: String,
         required: true
     },
 
     date: {
-        type: Date,
-        required: true
-    },
-
-    teacherId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
+        type: String,
+        required:true,
+        default: moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')
     },
 
     studentId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'pupil',
         required: true
-    },
-    createdBy: {
-        type: String,
-        // default: userId
-    },
+    }
+ 
 }, {
     timestamps: true,
 });

@@ -1,19 +1,21 @@
 const express = require('express')
 const router = express.Router()
 // const path = require('path')
-const Remark = require('../models/remarks')
+const REMARK = require('../models/remarks')
 
 router.post('/', async (req, res) => {
     try {
-        let data = req.body
-        console.log(data)
-        
-        if (data.title && data.message && data.date && data.teacherId &&  data.studentId) {
-            const remarks = new Remark(data)
-            let insertId = await remarks.save()
-            res.status(201).send(insertId);
+        console.log(req.body)
+        let item = {
+           title: req.body.title,
+           message: req.body.message,
+           studentId: req.body.studentId 
         }
-        else res.status(400).send("Fill in all fields")
+
+        const data = new REMARK(item)
+        await data.save()
+
+        res.json({ message: 'Data saved successfully',status:true }).status(201)
     }
     catch (error) {
         res.status(400).send(error)

@@ -9,38 +9,39 @@ import { NurseryStudent } from './interface/pupils';
 export class BackendService {
 
   api: string = 'http://localhost:3400/api'
+   options = { content: FormData };
 
-  constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) { }
 
-  addItem(item: NurseryStudent) {
-    return this.http.post(`${this.api}/pupils`, item)
-  }
-
-
-  //get all data
-
-  getItems() {
-    return this.http.get(`${this.api}/pupils`)
-
-  }
-
-  //getOne all data
-
-  getOneItems(id:any) {
-    return this.http.get(`${this.api}/pupils/${id}`)
-
-  }
-
-  // delete 
+addItem(item: any) {
+  return this.http.post(`${this.api}/pupils`, item )
+}
 
 
-  deleteItem(id: any) {
-    return this.http.delete(`${this.api}/pupils/${id}`)
-  }
+//get all data
+
+getItems() {
+  return this.http.get(`${this.api}/pupils`)
+
+}
+
+//getOne all data
+
+getOneItems(id: any) {
+  return this.http.get(`${this.api}/pupils/${id}`)
+
+}
+
+// delete 
 
 
-  // updateItem 
-  updateItem(id: any, item: NurseryStudent) {
-    return this.http.put(`${this.api}/pupils/${id}`, item)
-  }
+deleteItem(id: any) {
+  return this.http.delete(`${this.api}/pupils/${id}`)
+}
+
+
+// updateItem 
+updateItem(id: any, item: NurseryStudent) {
+  return this.http.put(`${this.api}/pupils/${id}`, item)
+}
 }

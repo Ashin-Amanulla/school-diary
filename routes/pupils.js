@@ -1,14 +1,30 @@
 const express = require('express')
 const router = express.Router()
 const PUPIL = require('../models/pupil')
-
-
+const imgUpload = require ('../middlewares/multer')
+const moment = require('moment')
 // Adding pupil data 
-router.post('/', async (req, res) => {
+// !if you dont use multer as middleware then formdata will be empty!! 
+router.post('/',imgUpload, async (req, res) => {
     try {
-        let item = req.body
-        if (item == null) throw ('No data') //error if data is null
+        console.log(req.body)
+        if (req.body == null) throw ('No data') //error if data is null
 
+
+        let item ={
+            fullName:req.body.fullName,
+            dateOfBirth:moment(req.body.dateOfBirth).format("MMM Do YYYY") ,
+            gender: req.body.gender,
+            address: req.body.address,
+            email:req.body.email,
+            password:req.body.password,
+            photo: req.files?.image[0].path,
+            parentName:req.body.parentName,
+            parentPhoneNumber:req.body.parentPhone,
+            emergencyName:req.body.emergencyName,
+            emergencyPhoneNumber:req.body.emergencyPhone,
+            emergencyRelationship: req.body.emergencyRelationship
+        }
         const data = new PUPIL(item)
         await data.save()
 
@@ -68,7 +84,7 @@ router.put('/:_id', async (req, res) => {
 router.delete('/:_id', async (req, res) => {
     try {
         let _id = req.params._id
-        let deleted = await User.findByIdAndDelete({ _id })
+        let deleted = await PUPIL.findByIdAndDelete({ _id })
         res.json({ message: 'deleted successfully!!' , status:true }).status(200)
     }
     catch (error) {
