@@ -48,7 +48,7 @@ export class AnnouncementListComponent {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.api.deleteItem(id).subscribe(result => {
+        this.api.deleteNotice(id).subscribe(result => {
           this.announcements = this.announcements.filter((item: any) => item._id !== id)
         });
 

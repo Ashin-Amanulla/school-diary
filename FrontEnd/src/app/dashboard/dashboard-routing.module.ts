@@ -8,6 +8,7 @@ import { AnnouncementListComponent } from './pages/announcement-list/announcemen
 import { AnnouncementFormComponent } from './pages/announcement-form/announcement-form.component';
 import { PupilsEditComponent } from './pages/pupils-edit/pupils-edit.component';
 import { AnnouncementEditComponent } from './pages/announcement-edit/announcement-edit.component';
+import { CalenderComponent } from './pages/calender/calender.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,8 @@ const routes: Routes = [
       { path: 'announcement-list', component: AnnouncementListComponent },
       { path: 'announcement-new', component: AnnouncementFormComponent },
       { path: 'announcement-edit', component: AnnouncementEditComponent },
+      { path: 'calender', component: CalenderComponent },
+
     ],
   },
 

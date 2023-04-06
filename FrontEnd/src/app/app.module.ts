@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BackendService } from './dashboard/backend.service';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -17,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

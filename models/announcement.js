@@ -13,18 +13,19 @@ const noticeSchema = new Schema({
     date: {
         type: String,
         required: true,
-        default: moment(Date.now()).format('MMMM Do YYYY')
+        default: moment(Date.now()).format('MMMM Do YYYY'),
     },
 
     type: {
         type: String,
         enum: ['General Event', 'Volunteering Activity', 'Homework', 'Student Achievement']
-    }
+    },
 
-}, {
+},{
     timestamps: true,
 });
 
-let noticeModel = mongoose.model('notice', noticeSchema);
 
-module.exports = noticeModel;
+let NOTICE = mongoose.model('notice', noticeSchema);
+
+module.exports = NOTICE;

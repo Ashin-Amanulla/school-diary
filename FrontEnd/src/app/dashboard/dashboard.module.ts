@@ -15,6 +15,8 @@ import { AnnouncementFormComponent } from './pages/announcement-form/announcemen
 import { PupilsEditComponent } from './pages/pupils-edit/pupils-edit.component';
 import { AnnouncementEditComponent } from './pages/announcement-edit/announcement-edit.component';
 import { SearchPipe } from './search.pipe';
+import { CalenderComponent } from './pages/calender/calender.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 
@@ -30,13 +32,15 @@ import { SearchPipe } from './search.pipe';
     AnnouncementFormComponent,
     PupilsEditComponent,
     AnnouncementEditComponent,
-    SearchPipe
+    SearchPipe,
+    CalenderComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    FullCalendarModule
   ],
   providers: [BackendService,SearchPipe],
 
