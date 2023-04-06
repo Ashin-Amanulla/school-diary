@@ -41,7 +41,7 @@
 
   <div class="flex-col pl-5">
     <a
-      (click)="editItem(21)"
+      (click)="editItem()"
       class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
     >
       <svg
@@ -81,7 +81,7 @@
         />
       </svg>
 
-      Remarks
+      New remark
     </a>
   </div>
 </div>
@@ -91,11 +91,22 @@
 <section class="bg-amber-200 rounded-t-lg mt-9 dark:bg-gray-900 py-8 lg:py-16">
   <div class="max-w-2xl mx-auto px-4">
     <div class="flex justify-between items-center mb-6">
-      <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-        Recent Discussion
-      </h2>
+      <div>
+        <h2
+          class="text-lg lg:text-xs underline font-bold text-gray-900 dark:text-white"
+        >
+          Recent Discussion
+        </h2>
+        <br />
+        <h6 class="text-lg lg:text-3xl text-teal-800 font-bold dark:text-white">
+          {{ remark?.remark }}
+        </h6>
+        <p class="text-2xs text-stone-700 font-bold dark:text-white">
+          {{ remark?.date }}
+        </p>
+      </div>
     </div>
-    <form class="mb-6">
+    <form class="mb-6" [formGroup]="commentForm" (ngSubmit)="commentSubmit()">
       <div
         class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
       >
@@ -106,6 +117,7 @@
           class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
           placeholder="Write a comment..."
           required
+          formControlName="text"
         ></textarea>
       </div>
       <button
@@ -115,7 +127,10 @@
         Post comment
       </button>
     </form>
-    <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
+    <article
+      class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900"
+      *ngFor="let item of comments"
+    >
       <footer class="flex justify-between items-center mb-2">
         <div class="flex items-center">
           <p
@@ -128,17 +143,14 @@
             />Michael Gough
           </p>
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            <time pubdate datetime="2022-02-08" title="February 8th, 2022"
-              >Feb. 8, 2022</time
-            >
+            <time pubdate datetime="2022-02-08" title="February 8th, 2022">{{
+              item.date
+            }}</time>
           </p>
         </div>
       </footer>
       <p class="text-gray-500 dark:text-gray-400">
-        Very straight-to-point article. Really worth time reading. Thank you!
-        But tools are just the instruments for the UX designers. The knowledge
-        of the design tools are as important as the creation of the design
-        strategy.
+        {{ item.text }}
       </p>
     </article>
   </div>
@@ -177,21 +189,23 @@
         <span class="sr-only">Close modal</span>
       </button>
       <div class="px-6 py-6 lg:px-8">
-        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-          Remarks
+        <h3
+          class="mb-4 text-xl text-center font-medium text-gray-900 dark:text-white"
+        >
+          Write remark
         </h3>
         <form
           class="space-y-6"
-          [formGroup]="reviewForm"
-          (ngSubmit)="reviewSubmit()"
+          [formGroup]="remarkForm"
+          (ngSubmit)="remarksSubmit()"
         >
           <div>
             <textarea
-              id="message"
-              formControlName="review"
-              rows="4"
-              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Write your thoughts here..."
+              type="text"
+              formControlName="remark"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Write here..."
+              required
             ></textarea>
           </div>
 
@@ -199,7 +213,7 @@
             type="submit"
             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Send
+            Sent
           </button>
         </form>
       </div>

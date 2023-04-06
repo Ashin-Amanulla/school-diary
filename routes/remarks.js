@@ -2,72 +2,54 @@ const express = require('express')
 const router = express.Router()
 // const path = require('path')
 const REMARK = require('../models/remarks')
+const COMMENT = require('../models/comments')
 
 router.post('/', async (req, res) => {
     try {
         console.log(req.body)
         let item = {
-           title: req.body.title,
-           message: req.body.message,
-           studentId: req.body.studentId 
+            remark: req.body.remark,
+            studentId: req.body.studentId
         }
 
-        const data = new REMARK(item)
-        await data.save()
+        const doesExist = await REMARK.findOne({ studentId: item.studentId })
+        if (doesExist) {
+            let newData = { $set: item }
+            let existId = doesExist._id
+            await REMARK.findByIdAndUpdate(existId, newData, { new: true })
+            await COMMENT.deleteMany({postId:existId})
+            res.json({ message: 'success',status:true }).status(200)
+        }
+        else {
+            const data = new REMARK(item)
+            await data.save()
+            res.json({ message: 'Data saved successfully', status: true }).status(201)
 
-        res.json({ message: 'Data saved successfully',status:true }).status(201)
+        }
     }
     catch (error) {
+        console.log(error)
         res.status(400).send(error)
     }
 })
 
-router.get('/', async (req, res) => {
+
+
+router.get('/:student_id', async (req, res) => {
     try {
-        let remarks = await Remark.find({})
-        res.json(remarks)
-        // res.status(201).send(remarks)
+       
+        let _id = req.params.student_id
+        console.log("testtttttt")
+        let remarks = await REMARK.findOne({ studentId: _id })
+
+        let comments = await COMMENT.find({ postId: remarks._id }).sort({_id:-1})
+        res.json({data:remarks,comments:comments}).status(200)
     }
     catch (error) {
         res.status(400).send(error)
     }
 })
 
-router.get('/:_id', async (req, res) => {
-    try {
-        let params = req.params
-        let _id = params._id
-        let remarks = await Remark.find({ _id })
-        res.json(remarks)
-        // res.status(201).send(remarks)
-    }
-    catch (error) {
-        res.status(400).send(error)
-    }
-})
 
-router.put('/:_id', async (req, res) => {
-    try {
-        let _id = req.params._id
-        let body = req.body
-        let updatedData = { $set: body }
-        let updated = await Remark.findByIdAndUpdate(_id, updatedData, { new: true })
-        updated ? res.status(201).send(updated) : res.status(400).send({ message: "Remark Not Found with this id" })
-    }
-    catch (error) {
-        res.status(400).send(error)
-    }
-})
-
-router.delete('/:_id', async (req, res) => {
-    try {
-        let _id = req.params._id
-        let deleted = await Remark.findByIdAndDelete({ _id })
-        res.send(deleted)
-    }
-    catch (error) {
-        res.status(400).send(error)
-    }
-})
 
 module.exports = router

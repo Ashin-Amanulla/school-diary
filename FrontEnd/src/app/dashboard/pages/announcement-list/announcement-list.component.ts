@@ -2,19 +2,23 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendService } from '../../backend.service';
 import Swal from 'sweetalert2';
+
 @Component({
-  selector: 'app-pupils-list',
-  templateUrl: './pupils-list.component.html',
-  styleUrls: ['./pupils-list.component.scss']
+  selector: 'app-announcement-list',
+  templateUrl: './announcement-list.component.html',
+  styleUrls: ['./announcement-list.component.scss']
 })
-export class PupilsListComponent {
+export class AnnouncementListComponent {
+
+
   constructor(private route: Router, public api: BackendService) { }
 
-  query = '';
-  pupils: any
+  query:String = ''
+  announcements: any
+  modalItem: any = ''
   //redirect to add form
   addItem() {
-    this.route.navigate(['dashboard/add-new'])
+    this.route.navigate(['dashboard/announcement-new'])
   }
 
 
@@ -25,8 +29,8 @@ export class PupilsListComponent {
 
 
   getItems() {
-    this.api.getItems().subscribe((res: any) => {
-      this.pupils = res.data
+    this.api.getNotice().subscribe((res: any) => {
+      this.announcements = res.data
     })
   }
 
@@ -42,30 +46,27 @@ export class PupilsListComponent {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
-    }).then((result:any) => {
+    }).then((result) => {
       if (result.isConfirmed) {
         this.api.deleteItem(id).subscribe(result => {
-          this.pupils = this.pupils.filter((item:any) => item._id !== id)
+          this.announcements = this.announcements.filter((item: any) => item._id !== id)
         });
-       
+
       }
     })
 
-   
-  }
-
-
-
-
-  viewItem(id: any) {
-    localStorage.setItem('pupil_id', id)
-    this.route.navigate(['dashboard/view-item']);
 
   }
 
-  logout() {
-    localStorage.removeItem('token')
-    this.route.navigate(['/login']);
+  viewItem(item: any) {
+    this.modalItem = item
   }
+
+  editItem(id:any) {
+    localStorage.setItem('announcement_id', id)
+
+    this.route.navigate(['dashboard/announcement-edit']);
+  }
+
 
 }

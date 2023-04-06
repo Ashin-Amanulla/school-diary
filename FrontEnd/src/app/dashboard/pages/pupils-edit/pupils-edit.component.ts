@@ -1,24 +1,27 @@
 import { Component } from '@angular/core';
-import { NurseryStudent } from '../../interface/pupils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../../backend.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-pupils',
-  templateUrl: './pupils.component.html',
-  styleUrls: ['./pupils.component.scss']
+  selector: 'app-pupils-edit',
+  templateUrl: './pupils-edit.component.html',
+  styleUrls: ['./pupils-edit.component.scss']
 })
-export class PupilsComponent {
+export class PupilsEditComponent {
+
 
   nurseryStudentForm!: FormGroup;
   selectedFile: any = null;
   images: any;
+  imgName:String=''
   ifUploaded: Boolean = false; //to ensure uploading is complete
    fd:any = new FormData();
-
+id:any
   passwordReg: string = ''
+
+
   constructor(private fb: FormBuilder, private api: BackendService, private router: Router) {
     this.nurseryStudentForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -31,11 +34,46 @@ export class PupilsComponent {
       parentName: ['', Validators.required],
       parentPhoneNumber: ['', Validators.required],
       emergencyName: ['', Validators.required],
-      emergencyPhoneNumber: ['', Validators.required],
+      emergencyPhoneNumber: ['',Validators.required],
       emergencyRelationship: [''],
 
     });
    }
+
+
+   ngOnInit():void{
+    this.id = localStorage.getItem('pupil_id')
+    this.getIndividualData(this.id);
+   }
+
+   //single info
+  getIndividualData(id: any) {
+
+    this.api.getOneItems(id).subscribe((res: any) => {
+      let item = res.data[0]
+      console.log(item)
+
+      this.nurseryStudentForm = this.fb.group({
+        fullName: [item.fullName, Validators.required],
+        dateOfBirth: [item.dateOfBirth, Validators.required],
+        gender: [item.gender],
+        address: [item.address],
+        email: [item.email, Validators.required],
+        password: [item.password, Validators.required],
+        // image: [null],
+        parentName: [item.parentName, Validators.required],
+        parentPhoneNumber: [item.parentPhoneNumber, Validators.required],
+        emergencyName: [item.emergencyName, Validators.required],
+        emergencyPhoneNumber: [item.emergencyPhoneNumber, Validators.required],
+        emergencyRelationship: [item.emergencyRelationship],
+  
+      });
+      this.imgName = item.photo.split("\\")[2]
+    });
+  }
+
+
+
 
   //Image upload
   passportPhoto(event: any) {
@@ -46,6 +84,8 @@ export class PupilsComponent {
   }
 
   onSubmit() {
+
+
     const nurseryStudent = this.nurseryStudentForm.value;
     // append image and send data 
     for (const prop in nurseryStudent) {
@@ -56,7 +96,7 @@ export class PupilsComponent {
       this.fd.append('image', this.selectedFile, this.selectedFile.name); //image appended last due to bug
     }
 
-    this.api.addItem(this.fd).subscribe((res: any) => {
+    this.api.updateItem(this.id,this.fd).subscribe((res: any) => {
       if (res.status) {
         Swal.fire({
           icon: 'success',
@@ -103,4 +143,5 @@ export class PupilsComponent {
     const year = date.getFullYear();
     return year;
   }
+
 }

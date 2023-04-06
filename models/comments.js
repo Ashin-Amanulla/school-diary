@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const moment = require('moment')
 
-const remarksSchema = new Schema({
+const commentsSchema = new Schema({
  
 
-    remark: {
+    text: {
         type: String,
         required: true
     },
@@ -16,9 +16,14 @@ const remarksSchema = new Schema({
         default: moment(Date.now()).format('MMMM Do YYYY, h:mm a')
     },
 
-    studentId: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'pupil',
+        ref: 'pupils',
+        required: true
+    },
+    postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'remarks',
         required: true
     }
  
@@ -26,6 +31,6 @@ const remarksSchema = new Schema({
     timestamps: true,
 });
 
-let remarksModel = mongoose.model('remark', remarksSchema);
+let commentsModel = mongoose.model('comments', commentsSchema);
 
-module.exports = remarksModel;
+module.exports = commentsModel;

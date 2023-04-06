@@ -1,31 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const PUPIL = require('../models/pupil')
-const imgUpload = require ('../middlewares/multer')
-const moment = require('moment')
-// Adding pupil data 
-// !if you dont use multer as middleware then formdata will be empty!! 
-router.post('/',imgUpload, async (req, res) => {
+const NOTICE = require('../models/announcement')
+
+
+router.post('/', async (req, res) => {
     try {
         console.log(req.body)
         if (req.body == null) throw ('No data') //error if data is null
 
 
         let item ={
-            fullName:req.body.fullName,
-            dateOfBirth:moment(req.body.dateOfBirth).format("MMM Do YYYY") ,
-            gender: req.body.gender,
-            address: req.body.address,
-            email:req.body.email,
-            password:req.body.password,
-            photo: req.files?.image[0].path,
-            parentName:req.body.parentName,
-            parentPhoneNumber:req.body.parentPhoneNumber,
-            emergencyName:req.body.emergencyName,
-            emergencyPhoneNumber:req.body.emergencyPhoneNumber,
-            emergencyRelationship: req.body.emergencyRelationship
+            description:req.body.description,
+            type:req.body.type
         }
-        const data = new PUPIL(item)
+
+        const data = new NOTICE(item)
         await data.save()
 
         res.json({ message: 'Data saved successfully',status:true }).status(201)
@@ -37,10 +26,10 @@ router.post('/',imgUpload, async (req, res) => {
 })
 
 
-// Reading all pupil data 
+// Reading all NOTICE data 
 router.get('/', async (req, res) => {
     try {
-        let list = await PUPIL.find({})
+        let list = await NOTICE.find({}).sort({_id:-1})
         res.json({ message: 'success', data: list,status:true }).status(200)
     }
     catch (error) {
@@ -49,12 +38,12 @@ router.get('/', async (req, res) => {
     }
 })
 
-// Reading one pupil data 
+// Reading one NOTICE data 
 
 router.get('/:_id', async (req, res) => {
     try {
         let _id = req.params._id
-        let userOne = await PUPIL.find({ _id: _id })
+        let userOne = await NOTICE.find({ _id: _id })
         res.json({ message: 'success', data: userOne , status:true}).status(200)
     }
     catch (error) {
@@ -65,13 +54,12 @@ router.get('/:_id', async (req, res) => {
 
 // Updating one 
 
-router.put('/:_id',imgUpload, async (req, res) => {
+router.put('/:_id', async (req, res) => {
     try {
         let _id = req.params._id
         let body = req.body
-        console.log('update',body)
         let updatedData = { $set: body }
-        await PUPIL.findByIdAndUpdate(_id, updatedData, { new: true })
+        await NOTICE.findByIdAndUpdate(_id, updatedData, { new: true })
         res.json({ message: 'updated successfully!!' , status:true }).status(200)
     }
     catch (error) {
@@ -85,7 +73,7 @@ router.put('/:_id',imgUpload, async (req, res) => {
 router.delete('/:_id', async (req, res) => {
     try {
         let _id = req.params._id
-        let deleted = await PUPIL.findByIdAndDelete({ _id })
+        let deleted = await NOTICE.findByIdAndDelete({ _id })
         res.json({ message: 'deleted successfully!!' , status:true }).status(200)
     }
     catch (error) {

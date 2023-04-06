@@ -11,7 +11,7 @@ require('./config/init_mongodb.js') //DB initialisation
 
 
 //middleware
-// app.use(helmet());
+app.use(helmet({crossOriginResourcePolicy: false}));
 app.use(cors())
 app.use(logger('dev'))
 app.use(compression())
@@ -25,17 +25,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'));
 
 
-// api 
-app.use('/api/uploads', express.static('uploads'))  // for image and pdf reading
 
-app.use('/api/pupils', require('./routes/pupils'))
-
-app.use('/api/user', require('./routes/user'))
-app.use('/api/class', require('./routes/class'))
-app.use('/api/examTimeTable', require('./routes/examTimeTable'))
-app.use('/api/remarks', require('./routes/remarks'))
-app.use('/api/circular', require('./routes/circular'))
-
+// routeHandler 
+app.use('/api',require('./routes'))
 
 
 
