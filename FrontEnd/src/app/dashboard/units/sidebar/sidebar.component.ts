@@ -10,6 +10,8 @@ export class SidebarComponent {
 constructor(private router:Router){}
 
   logout(){
+    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/login'])
   }
 }

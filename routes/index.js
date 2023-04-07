@@ -10,8 +10,13 @@ router.use('/remarks', require('./remarks'))
 
 router.use('/comments', require('./comments'))
 
+router.use('/calender', require('./calender'))
+
 
 router.use('/announcements', require('./announcements'))
+
+router.use('/auth', require('./auth'))
+
 
 
 

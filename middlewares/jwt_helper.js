@@ -2,25 +2,26 @@ const JWT = require('jsonwebtoken')
 const createError = require('http-errors')
 
 module.exports = {
-    signAccessToken: (userId,role) => {
+    signAccessToken: (email,role) => {
         return new Promise((resolve, reject) => {
 
             const payload = {
+                email:email,
                 role: role
                 
             }
 
-            const secret = process.env.ACCESS_TOKEN_SECRET
+            const secret = 'process.env.ACCESS_TOKEN_SECRET'
 
-            const options = {
-                expiresIn: '1hr', 
-                issuer: 'ict-academy.com',
-                audience: userId
-            }
+            // const options = {
+            //     expiresIn: '1hr', 
+            //     issuer: 'ict-academy.com',
+            //     audience: userId
+            // }
 
 
 
-            JWT.sign(payload, secret, options, (err, token) => {
+            JWT.sign(payload, secret,  (err, token) => {
                 if (err) {
                     console.log(err.message)
                     return reject(createError.InternalServerError())

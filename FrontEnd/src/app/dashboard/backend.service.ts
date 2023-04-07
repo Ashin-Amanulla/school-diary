@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,87 +12,139 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-addItem(item: any) {
-  return this.http.post(`${this.api}/pupils`, item )
-}
+  addItem(item: any) {
+    return this.http.post(`${this.api}/pupils`, item)
+  }
 
 
-//get all data
+  //get all data
 
-getItems() {
-  return this.http.get(`${this.api}/pupils`)
+  getItems() {
+    return this.http.get(`${this.api}/pupils`)
 
-}
+  }
 
-//getOne all data
+  //getOne all data
 
-getOneItems(id: any) {
-  return this.http.get(`${this.api}/pupils/${id}`)
+  getOneItems(id: any) {
+    return this.http.get(`${this.api}/pupils/${id}`)
 
-}
+  }
 
-// delete 
-
-
-deleteItem(id: any) {
-  return this.http.delete(`${this.api}/pupils/${id}`)
-}
+  // delete 
 
 
-// updateItem 
-updateItem(id: any, item: any) {
-  return this.http.put(`${this.api}/pupils/${id}`, item)
-}
+  deleteItem(id: any) {
+    return this.http.delete(`${this.api}/pupils/${id}`)
+  }
 
 
-//?remarks
-
-addRemarks(item: any) {
-  return this.http.post(`${this.api}/remarks`, item )
-}
-getRemarks(id: any) {
-  return this.http.get(`${this.api}/remarks/${id}` )
-}
+  // updateItem 
+  updateItem(id: any, item: any) {
+    return this.http.put(`${this.api}/pupils/${id}`, item)
+  }
 
 
-//comments
-postComment(item:any){
-  return this.http.post(`${this.api}/comments` , item )
+  //?remarks
 
-}
-
-
-
-//announcements
-addNotice(item: any) {
-  return this.http.post(`${this.api}/announcements`, item )
-}
+  addRemarks(item: any) {
+    return this.http.post(`${this.api}/remarks`, item)
+  }
+  getRemarks(id: any) {
+    return this.http.get(`${this.api}/remarks/${id}`)
+  }
 
 
-//get all data
+  //comments
+  postComment(item: any) {
+    return this.http.post(`${this.api}/comments`, item)
 
-getNotice() {
-  return this.http.get(`${this.api}/announcements`)
-
-}
-
-//getOne all data
-
-getOneNotice(id: any) {
-  return this.http.get(`${this.api}/announcements/${id}`)
-
-}
-
-// delete 
+  }
 
 
-deleteNotice(id: any) {
-  return this.http.delete(`${this.api}/announcements/${id}`)
-}
+
+  //announcements
+  addNotice(item: any) {
+    return this.http.post(`${this.api}/announcements`, item)
+  }
 
 
-// updateItem 
-updateNotice(id: any, item: any) {
-  return this.http.put(`${this.api}/announcements/${id}`, item)
-}
+  //get all data
+
+  getNotice() {
+    return this.http.get(`${this.api}/announcements`)
+
+  }
+
+  //getOne all data
+
+  getOneNotice(id: any) {
+    return this.http.get(`${this.api}/announcements/${id}`)
+
+  }
+
+  // delete 
+
+
+  deleteNotice(id: any) {
+    return this.http.delete(`${this.api}/announcements/${id}`)
+  }
+
+
+  // updateItem 
+  updateNotice(id: any, item: any) {
+    return this.http.put(`${this.api}/announcements/${id}`, item)
+  }
+
+
+  // *calender 
+
+
+  addCalender(item: any) {
+    return this.http.post(`${this.api}/calender`, item)
+  }
+
+
+  //get all data
+
+  getCalender() {
+    return this.http.get(`${this.api}/calender`)
+      .pipe(
+        map((data: any) => {
+          console.log(data);
+          return data;
+        }), catchError(error => {
+          return throwError('Something went wrong');
+        })
+      );
+
+  }
+
+  //getOne all data
+
+  getOneCalender(id: any) {
+    return this.http.get(`${this.api}/calender/${id}`)
+
+  }
+
+  // delete 
+
+
+  deleteCalender(id: any) {
+    return this.http.delete(`${this.api}/calender/${id}`)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }), catchError(error => {
+          return throwError('Something went wrong');
+        })
+      );
+  }
+
+  // updateItem 
+  updateCalender(id: any, item: any) {
+    return this.http.put(`${this.api}/calender/${id}`, item)
+  }
+
+
 }
