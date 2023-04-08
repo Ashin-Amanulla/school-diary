@@ -31,7 +31,7 @@ app.use('/api',require('./routes'))
 
 
 //!master route
-app.get('*', function (req, res) {
+app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/FrontEnd/dist/front-end/index.html'));
 });
 
