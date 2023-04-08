@@ -13,7 +13,7 @@ export class AddRemarksComponent {
 
   remarkForm!: FormGroup
 
-  constructor(private fb: FormBuilder, public api: BackendService, private router: Router) {
+  constructor(private fb: FormBuilder, private api: BackendService, private router: Router) {
     this.remarkForm = this.fb.group({
       remark: ['', Validators.required],
       studentId: ['', Validators.required]

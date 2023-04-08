@@ -5,8 +5,8 @@ const cors = require('cors')
 const logger =require('morgan')
 const compression = require('compression')
 const PORT = 3400 || process.env.PORT
-
-// require('dotenv').config() //environmental variables
+const path = require('path');
+require('dotenv').config() //environmental variables
 require('./config/init_mongodb.js') //DB initialisation
 
 
@@ -22,12 +22,18 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 // for parsing multipart/form-data
-app.use(express.static('public'));
+app.use(express.static(__dirname +'/FrontEnd/dist/front-end'));
 
 
 
 // routeHandler 
 app.use('/api',require('./routes'))
+
+
+//master route
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname + '/FrontEnd/dist/front-end/index.html'));
+});
 
 
 
