@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  api: string = 'http://localhost:3400/api'
+  // api: string = environment.api
+  api:string= 'http://localhost:3400/api'
+  
+  // api:string='/api'
 
   constructor(private http: HttpClient) { }
 

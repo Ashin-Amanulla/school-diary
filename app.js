@@ -5,7 +5,7 @@ const cors = require('cors')
 const logger =require('morgan')
 const compression = require('compression')
 const PORT = 3400 || process.env.PORT
-const path = require('path');
+const path = require('path'); //!path
 require('dotenv').config() //environmental variables
 require('./config/init_mongodb.js') //DB initialisation
 
@@ -22,7 +22,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 // for parsing multipart/form-data
-app.use(express.static(__dirname +'/FrontEnd/dist/front-end'));
+app.use(express.static(__dirname +'/FrontEnd/dist/front-end')); //! to connect our front end dist file
 
 
 
@@ -30,7 +30,7 @@ app.use(express.static(__dirname +'/FrontEnd/dist/front-end'));
 app.use('/api',require('./routes'))
 
 
-//master route
+//!master route
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname + '/FrontEnd/dist/front-end/index.html'));
 });
