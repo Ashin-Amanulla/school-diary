@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../../../backend.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-announcement-edit',
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
 export class AnnouncementEditComponent {
   announcementForm!: FormGroup
   id: any
-  constructor(private fb: FormBuilder, private api: BackendService, private router: Router) {
+  constructor(private fb: FormBuilder, private api: BackendService ) {
     this.announcementForm = this.fb.group({
       type: ['', Validators.required],
       description: ['', Validators.required]
@@ -32,6 +33,7 @@ export class AnnouncementEditComponent {
 
   }
 
+ 
   onSubmit() {
     let value = this.announcementForm.value;
 

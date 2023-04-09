@@ -20,6 +20,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { AddEventComponent } from './pages/events/add-event/add-event.component';
 import { AnnouncementViewComponent } from './pages/announcements/announcement-view/announcement-view.component';
 import { AddRemarksComponent } from './pages/pupils/add-remarks/add-remarks.component';
+import { RoleGuard } from '../auth/role.guard';
 
 
 
@@ -48,7 +49,7 @@ import { AddRemarksComponent } from './pages/pupils/add-remarks/add-remarks.comp
     ReactiveFormsModule,
     FullCalendarModule
   ],
-  providers: [BackendService, SearchPipe],
+  providers: [BackendService, SearchPipe,RoleGuard],
 
 
 })

@@ -3,7 +3,7 @@ const mongoUrl = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017'
 const dbName = process.env.DB_NAME || 'school-diary'
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(mongoUrl, {
     dbName:dbName,
     useNewUrlParser: true,
     useUnifiedTopology: true,

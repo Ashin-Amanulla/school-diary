@@ -54,6 +54,7 @@ export class PupilsComponent {
     if (this.selectedFile) {
       this.fd.append('image', this.selectedFile, this.selectedFile.name); //image appended last due to bug
     }
+    console.log(this.fd)
 
     this.api.addItem(this.fd).subscribe((res: any) => {
       if (res.status) {

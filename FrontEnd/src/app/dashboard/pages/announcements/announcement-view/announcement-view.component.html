@@ -21,8 +21,9 @@
             class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
           >
         
-            <button class="button-54" role="button">Sign Up</button>
+            <button class="button-54" *ngIf="!isAuthorized()" role="button">Sign Up</button>
             <button
+            *ngIf="isAuthorized()"
             type="button"
             (click)="editItem(modalItem._id)"
             class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"

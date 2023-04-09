@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
         }
         //? For teacher
         if (item.email.trim() == 'teacher@classtrackr.com' && item.password.trim() == 'teacher@123') {
-            const user = { email: item.email, role: 'admin' }
-            const accessToken = await signAccessToken(user.email,user.role)
+            const user = { email: item.email, admin: true,login:true }
+            const accessToken = await signAccessToken(user)
             res.json({ token: accessToken, status: true }).status(201)
 
         }
@@ -30,9 +30,9 @@ router.post('/', async (req, res) => {
             if (!isMatch) throw createError.Unauthorized('password is invalid')
 
 
-            const user = { email: item.email, role: 'pupil' }
+            const user = { email: item.email, admin: false,login:true }
 
-            const accessToken = await signAccessToken(user.email,user.role)
+            const accessToken = await signAccessToken(user)
             res.json({ token: accessToken, status: true }).status(201)
         }
 

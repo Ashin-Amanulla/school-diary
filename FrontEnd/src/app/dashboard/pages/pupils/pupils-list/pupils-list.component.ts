@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendService } from '../../../backend.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/auth/auth.service';
 @Component({
   selector: 'app-pupils-list',
   templateUrl: './pupils-list.component.html',
   styleUrls: ['./pupils-list.component.scss']
 })
 export class PupilsListComponent {
-  constructor(private route: Router, public api: BackendService) { }
+  constructor(private route: Router, public api: BackendService, private auth: AuthService) { }
 
   query = '';
   pupils: any
@@ -17,6 +18,9 @@ export class PupilsListComponent {
     this.route.navigate(['dashboard/add-new'])
   }
 
+  isAuthorized() {
+    return this.auth.isAdmin()
+  }
 
   ngOnInit() {
     this.getItems()

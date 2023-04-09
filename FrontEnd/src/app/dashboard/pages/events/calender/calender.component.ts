@@ -8,6 +8,7 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { BackendService } from '../../../backend.service';
 import { Events } from './events';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-calender',
@@ -59,12 +60,16 @@ export class CalenderComponent {
 
   }
 
-  constructor(private changeDetector: ChangeDetectorRef, private api: BackendService) {
+  constructor(private changeDetector: ChangeDetectorRef, private api: BackendService , private auth:AuthService) {
 
   }
 
   ngOnInit(): void {
     this.getAllEvents();
+  }
+
+  isAuthorized():boolean {
+    return this.auth.isAdmin()
   }
 
   getAllEvents(): void {
@@ -77,6 +82,8 @@ export class CalenderComponent {
         events: res.data, //Loading existing data from backend
         eventClick(eventData) { //deleting event
           // tslint:disable-next-line:variable-name
+          if(!self.isAuthorized()) throw ('Unauthorized')
+          
           const event_id = eventData.event._def.extendedProps['_id'];
           Swal.fire({
             title: 'Are you sure?',

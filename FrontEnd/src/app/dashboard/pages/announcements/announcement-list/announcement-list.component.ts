@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendService } from '../../../backend.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-announcement-list',
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 export class AnnouncementListComponent {
 
 
-  constructor(private route: Router, public api: BackendService) { }
+  constructor(private route: Router, public api: BackendService , private auth:AuthService) { }
 
   query: String = ''
   announcements: any
@@ -19,7 +20,9 @@ export class AnnouncementListComponent {
   addItem() {
     this.route.navigate(['dashboard/announcement-new'])
   }
-
+  isAuthorized() {
+    return this.auth.isAdmin()
+  }
 
   ngOnInit() {
     this.getItems()

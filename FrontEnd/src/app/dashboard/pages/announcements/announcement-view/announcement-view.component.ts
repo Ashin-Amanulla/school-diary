@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { BackendService } from 'src/app/dashboard/backend.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { BackendService } from 'src/app/dashboard/backend.service';
 export class AnnouncementViewComponent {
   modalItem: any = ''
 
-constructor(public route:Router, private api:BackendService){}
+constructor(public route:Router, private api:BackendService , private auth:AuthService){}
 
 ngOnInit() {
    let id = localStorage.getItem('announcement_id');
@@ -21,7 +22,9 @@ ngOnInit() {
 
 }
 
-
+isAuthorized():boolean{
+  return this.auth.isAdmin()
+}
 
   editItem(id: any) {
     localStorage.setItem('announcement_id', id)

@@ -93,4 +93,17 @@ router.delete('/:_id', async (req, res) => {
         res.json({ message: error }).status(400)    }
 })
 
+// Reading one pupil data 
+
+router.get('sideBar/:email', async (req, res) => {
+    try {
+        let _id = req.params._id
+        let userOne = await PUPIL.find({ email: email })
+        res.json({ message: 'success', data: userOne , status:true}).status(200)
+    }
+    catch (error) {
+        console.log(error)
+        res.json({ message: error }).status(400)
+    }
+})
 module.exports = router

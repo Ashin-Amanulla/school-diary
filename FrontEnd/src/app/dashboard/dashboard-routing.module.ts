@@ -12,23 +12,24 @@ import { CalenderComponent } from './pages/events/calender/calender.component';
 import { AddEventComponent } from './pages/events/add-event/add-event.component';
 import { AnnouncementViewComponent } from './pages/announcements/announcement-view/announcement-view.component';
 import { AddRemarksComponent } from './pages/pupils/add-remarks/add-remarks.component';
+import { RoleGuard } from '../auth/role.guard';
 
 const routes: Routes = [
   {
     path: '', component: DashboardComponent, children: [
       { path: '', pathMatch: 'full', component: AnnouncementListComponent },
-      { path: 'pupils', component: PupilsListComponent },
-      { path: 'add-new', component: PupilsComponent },
+      { path: 'pupils', canActivate:[RoleGuard],component: PupilsListComponent },
+      { path: 'add-new',canActivate:[RoleGuard], component: PupilsComponent },
       { path: 'view-item', component: PupilsViewComponent },
-      { path: 'edit-item', component: PupilsEditComponent },
-      { path: 'add-remark', component: AddRemarksComponent },
+      { path: 'edit-item',canActivate:[RoleGuard], component: PupilsEditComponent },
+      { path: 'add-remark',canActivate:[RoleGuard], component: AddRemarksComponent },
       { path: 'announcements', component: AnnouncementListComponent },
-      { path: 'announcement-new', component: AnnouncementFormComponent },
-      { path: 'announcement-edit', component: AnnouncementEditComponent },
+      { path: 'announcement-new',canActivate:[RoleGuard], component: AnnouncementFormComponent },
+      { path: 'announcement-edit', canActivate:[RoleGuard], component: AnnouncementEditComponent },
       { path: 'announcement-view', component: AnnouncementViewComponent },
 
       { path: 'calender', component: CalenderComponent },
-      { path: 'add-event', component: AddEventComponent },
+      { path: 'add-event',canActivate:[RoleGuard], component: AddEventComponent },
 
 
 
