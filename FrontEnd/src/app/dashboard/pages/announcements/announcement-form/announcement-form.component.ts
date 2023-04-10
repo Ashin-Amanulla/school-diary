@@ -31,6 +31,7 @@ export class AnnouncementFormComponent {
           timer: 1500
         }).then(() => {
           this.announcementForm.reset()
+          this.router.navigate(['dashboard'])
         })
       }
       else {

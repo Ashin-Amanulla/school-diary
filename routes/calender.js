@@ -6,7 +6,6 @@ const moment = require('moment')
 // !if you dont use multer as middleware then formdata will be empty!! 
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
         if (req.body == null) throw ('No data') //error if data is null
 
 
@@ -60,7 +59,6 @@ router.put('/:_id', async (req, res) => {
     try {
         let _id = req.params._id
         let body = req.body
-        console.log('update',body)
         let updatedData = { $set: body }
         await CALENDER.findByIdAndUpdate(_id, updatedData, { new: true })
         res.json({ message: 'updated successfully!!' , status:true }).status(200)

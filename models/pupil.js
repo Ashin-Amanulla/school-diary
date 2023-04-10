@@ -15,7 +15,8 @@ const pupilSchema = new Schema(
         parentPhoneNumber: { type: String },
         emergencyName: { type: String },
         emergencyPhoneNumber: { type: String },
-        emergencyRelationship: { type: String }
+        emergencyRelationship: { type: String },
+        admin:{type:Boolean, default: false}
     },
     {
         timestamps: true,

@@ -24,7 +24,6 @@ export class AnnouncementEditComponent {
     this.id = localStorage.getItem('announcement_id');
     this.api.getOneNotice(this.id).subscribe((res: any) => {
       let item = res.data[0]
-      console.log(item)
       this.announcementForm = this.fb.group({
         type: [item.type, Validators.required],
         description: [item.description, Validators.required]

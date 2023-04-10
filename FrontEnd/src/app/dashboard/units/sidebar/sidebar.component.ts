@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BackendService } from '../../backend.service';
 
@@ -9,27 +9,31 @@ import { BackendService } from '../../backend.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-constructor(private router:Router , private auth:AuthService , private api:BackendService){}
+  constructor(private router: Router, private auth: AuthService, private api: BackendService) { }
 
-item$:any ;
-  logout(){
+  loginUser: any;
+
+  logout() {
     localStorage.clear();
     sessionStorage.clear();
     this.router.navigate(['/login'])
   }
 
-  ngOnInit(){
-    this.getIndividualData();
+  ngOnInit() {
+    this.getEmail();
 
   }
 
-  isAuthorized():boolean{
+  isAuthorized(): boolean {
     return this.auth.isAdmin()
   }
-  getIndividualData() {
+  getEmail() {
 
-  this.item$ =  this.auth.getOneItems()
- console.log('Hi',this.item$)
+    let id = this.auth.idFetch()
+    this.api.getOneItems(id).subscribe((res: any) => {
+      this.loginUser = res.data[0].fullName
+    })
+
   }
 
 }

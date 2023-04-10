@@ -20,8 +20,16 @@ const noticeSchema = new Schema({
         type: String,
         enum: ['General Event', 'Volunteering Activity', 'Homework', 'Student Achievement']
     },
+    volunteers: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'pupil',
+            required: false
+        }],
+       
+    }
 
-},{
+}, {
     timestamps: true,
 });
 

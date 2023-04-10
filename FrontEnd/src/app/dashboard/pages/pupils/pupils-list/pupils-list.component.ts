@@ -30,7 +30,8 @@ export class PupilsListComponent {
 
   getItems() {
     this.api.getItems().subscribe((res: any) => {
-      this.pupils = res.data
+      let list = res.data
+      this.pupils = list.filter((i: any) => !i.admin)
     })
   }
 

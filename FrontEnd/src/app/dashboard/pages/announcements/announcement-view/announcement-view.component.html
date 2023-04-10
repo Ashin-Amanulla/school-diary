@@ -21,7 +21,10 @@
             class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
           >
         
-            <button class="button-54" *ngIf="!isAuthorized()" role="button">Sign Up</button>
+            <button (click)="volunteerSignUp()" class="button-54" *ngIf="!isAuthorized() && modalItem.type == 'Volunteering Activity' && !alreadySigned " role="button">Sign Up</button>
+            <!-- already signed  -->
+            <button (click)="optOut()"  class="button-54" *ngIf="!isAuthorized() && modalItem.type == 'Volunteering Activity' && alreadySigned " role="button">Opt Out !</button>
+
             <button
             *ngIf="isAuthorized()"
             type="button"
@@ -30,6 +33,49 @@
           >
             Edit
           </button>
+          </div>
+          <div class="p-6 space-y-6" *ngIf=" modalItem.type == 'Volunteering Activity'  ">
+            <h2 class="text-4xl font-extrabold dark:text-white text-center">Volunteer List</h2>
+            
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Sl No
+              </th>
+              <th scope="col" class="px-6 py-3">
+                 Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Parent Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Contact
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngFor="let item of volunteerList ; let i = index">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{i+1}}
+              </th>
+              <td class="px-6 py-4">
+                  {{item.fullName}}
+              </td>
+              <td class="px-6 py-4">
+                  {{item.parentName}}
+              </td>
+              <td class="px-6 py-4">
+                {{item.parentPhoneNumber}}
+              </td>
+          </tr>
+        
+      
+      </tbody>
+  </table>
+</div>
+
           </div>
         </div>
       </div>

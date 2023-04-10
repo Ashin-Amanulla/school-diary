@@ -5,7 +5,6 @@ const COMMENTS = require('../models/comments')
 
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
         let item = {
            text: req.body.text,
            userId: req.body.userId ,

@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment';
 export class BackendService {
 
   // api: string = environment.api
-  api:string= 'http://localhost:3400/api'
-  
+  api: string = 'http://localhost:3400/api'
+
   // api:string='/api'
 
   constructor(private http: HttpClient) { }
@@ -100,6 +100,23 @@ export class BackendService {
     return this.http.put(`${this.api}/announcements/${id}`, item)
   }
 
+  //signUp volunteering
+  signVolunteer(user_id: any, id: any) {
+    return this.http.patch(`${this.api}/announcements/${id}`, { user_id })
+
+  }
+
+   //optOut volunteering
+   optOut(user_id: any, id: any) {
+    return this.http.patch(`${this.api}/announcements/optOut/${id}`, { user_id })
+
+  }
+
+  //get volunteer details
+  getVolunteerdetails(value: any) {
+    return this.http.post(`${this.api}/pupils/volunteer`, { value })
+
+  }
 
   // *calender 
 
@@ -115,7 +132,6 @@ export class BackendService {
     return this.http.get(`${this.api}/calender`)
       .pipe(
         map((data: any) => {
-          console.log(data);
           return data;
         }), catchError(error => {
           return throwError('Something went wrong');

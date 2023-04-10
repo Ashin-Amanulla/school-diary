@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { BackendService } from '../../../backend.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/auth/auth.service';
-
 @Component({
   selector: 'app-announcement-list',
   templateUrl: './announcement-list.component.html',
@@ -12,7 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class AnnouncementListComponent {
 
 
-  constructor(private route: Router, public api: BackendService , private auth:AuthService) { }
+  constructor( private route: Router, public api: BackendService, private auth: AuthService) { }
 
   query: String = ''
   announcements: any
@@ -25,7 +24,9 @@ export class AnnouncementListComponent {
   }
 
   ngOnInit() {
-    this.getItems()
+    this.getItems();
+
+  
 
   }
 

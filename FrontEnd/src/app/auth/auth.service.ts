@@ -7,8 +7,9 @@ import jwt_decode from "jwt-decode"
 
 interface MyToken {
   admin: boolean,
-  email: string,
-  login: boolean
+  id: string,
+  login: boolean,
+
 
   // whatever else is in the JWT.
 }
@@ -33,7 +34,7 @@ export class AuthService {
     var token = localStorage.getItem('accessToken') || '';
 
     try {
-      var user = jwt_decode<MyToken>(token);
+      var user = jwt_decode<any>(token);
       return user.login ? true : false;
 
     } catch (error) {
@@ -58,24 +59,17 @@ export class AuthService {
 
   }
 
- async  emailDecode(){
-    var token = localStorage.getItem('accessToken') || '';
+  idFetch() {
+    let token = localStorage.getItem('accessToken') || '';
 
     try {
-      var user = jwt_decode<MyToken>(token);
-      return user.email.toLowerCase();
+      let user = jwt_decode<MyToken>(token);
+      return user.id;
 
     } catch (error) {
       console.log('Token error', error)
-      return 'false'
+      return 'no user available'
     }
-
-
-  }
-   async getOneItems() {
-    let email = await  this.emailDecode()
-    console.log('rest',email)
-    return this.http.get(`${this.api}/pupils/sideBar/${email}`)
 
 
   }
@@ -83,4 +77,11 @@ export class AuthService {
   login(item: any) {
     return this.http.post(`${this.api}/auth`, item)
   }
+
+  //retrive Token for token interception
+  getToken() {
+    return localStorage.getItem('accessToken')
+  }
+
+
 }

@@ -5,7 +5,6 @@ const NOTICE = require('../models/announcement')
 
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
         if (req.body == null) throw ('No data') //error if data is null
 
 
@@ -15,7 +14,7 @@ router.post('/', async (req, res) => {
         }
         const data = new NOTICE(item)
         await data.save()
-  
+
         res.json({ message: 'Data saved successfully', status: true }).status(201)
     }
     catch (error) {
@@ -80,5 +79,48 @@ router.delete('/:_id', async (req, res) => {
         res.json({ message: error }).status(400)
     }
 })
+
+// to volunteer 
+router.patch('/:_id', async (req, res) => {
+    try {
+        let _id = req.params._id
+        let user_id = req.body.user_id
+
+        // const doesExist = await NOTICE.find({ volunteers:{ $in: [user_id]} })
+        // if (doesExist) throw ('Already Signed in')
+
+        await NOTICE.updateOne({ _id: _id },
+            { $push: { volunteers: user_id } }
+        )
+        res.json({ message: 'signed up successfully!!', status: true }).status(200)
+    }
+    catch (error) {
+        console.log(error)
+        res.json({ message: error }).status(400)
+    }
+})
+
+// optOut
+router.patch('/optOut/:_id', async (req, res) => {
+    try {
+        let _id = req.params._id
+        let user_id = req.body.user_id
+        
+        // const doesExist = await NOTICE.find({ volunteers:{ $in: [user_id]} })
+        // if (doesExist) throw ('Already Signed in')
+
+        await NOTICE.updateOne({ _id: _id },
+            { $pull: { volunteers: user_id } }
+        )
+        res.json({ message: 'opted successfully!!', status: true }).status(200)
+    }
+    catch (error) {
+        console.log(error)
+        res.json({ message: error }).status(400)
+    }
+})
+
+
+
 
 module.exports = router

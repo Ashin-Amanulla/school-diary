@@ -40,7 +40,6 @@ export class PupilsComponent {
   passportPhoto(event: any) {
     if (event.target.files.length > 0) {
       this.selectedFile = <File>event.target.files[0];
-      console.log(event.target.files)
     }
   }
 
@@ -54,7 +53,6 @@ export class PupilsComponent {
     if (this.selectedFile) {
       this.fd.append('image', this.selectedFile, this.selectedFile.name); //image appended last due to bug
     }
-    console.log(this.fd)
 
     this.api.addItem(this.fd).subscribe((res: any) => {
       if (res.status) {

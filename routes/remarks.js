@@ -6,7 +6,6 @@ const COMMENT = require('../models/comments')
 
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
         let item = {
             remark: req.body.remark,
             studentId: req.body.studentId
@@ -39,7 +38,6 @@ router.get('/:student_id', async (req, res) => {
     try {
        
         let _id = req.params.student_id
-        console.log("testtttttt")
         let remarks = await REMARK.findOne({ studentId: _id })
 
         let comments = await COMMENT.find({ postId: remarks._id }).sort({_id:-1})

@@ -51,7 +51,6 @@ export class PupilsEditComponent {
 
     this.api.getOneItems(id).subscribe((res: any) => {
       let item = res.data[0]
-      console.log(item)
 
       this.nurseryStudentForm = this.fb.group({
         fullName: [item.fullName, Validators.required],
@@ -79,7 +78,6 @@ export class PupilsEditComponent {
   passportPhoto(event: any) {
     if (event.target.files.length > 0) {
       this.selectedFile = <File>event.target.files[0];
-      console.log(event.target.files)
     }
   }
 

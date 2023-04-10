@@ -30,7 +30,6 @@ export class LoginComponent {
     let value = this.LoginForm.value
     this.auth.login(value)
       .subscribe( (res: any) => {
-console.log(res)
           if (res.status && res.token) {
             //local storage
             localStorage.setItem('accessToken', res.token)
