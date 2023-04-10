@@ -36,4 +36,11 @@ export class SidebarComponent {
 
   }
 
+
+  toView(){
+    let id = this.auth.idFetch()
+    localStorage.setItem('pupil_id', id)
+    this.router.navigate(['dashboard/view-item']);
+
+  }
 }

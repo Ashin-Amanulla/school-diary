@@ -3,6 +3,7 @@ import { BackendService } from '../../../backend.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/auth/auth.service';
 @Component({
   selector: 'app-pupils-view',
   templateUrl: './pupils-view.component.html',
@@ -16,7 +17,7 @@ export class PupilsViewComponent {
   comments: any
   showContent:boolean = true
 
-  constructor(private fb: FormBuilder, public api: BackendService, private router: Router) {
+  constructor(private fb: FormBuilder, public api: BackendService, private router: Router,private auth: AuthService) {
 
     this.commentForm = this.fb.group({
 
@@ -33,6 +34,9 @@ export class PupilsViewComponent {
     this.getRecentRemark(id);
   }
 
+  isAuthorized() {
+    return this.auth.isAdmin()
+  }
 
 
   getRecentRemark(id: any) {
