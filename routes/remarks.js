@@ -24,13 +24,12 @@ router.post('/', pdfUpload, async (req, res) => {
             // delete previous PDF file if exists
             if (doesExist.pdf) {
                 let pdfPath = path.join(__dirname, '../', doesExist.pdf);
-             console.log('mvh',pdfPath)
+                console.log('mvh', pdfPath)
                 if (fs.existsSync(pdfPath)) {
                     fs.unlinkSync(pdfPath);
                     console.log("unlink: " + pdfPath)
-                }else{
+                } else {
                     console.log("nothing")
- 
                 }
             }
 

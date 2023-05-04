@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const CALENDER = require('../models/calender')
-const moment = require('moment')
+const PUPIL = require('../models/pupil')
+const {sendMailCalender} = require('../helpers/mail')
 // Adding pupil data 
 // !if you dont use multer as middleware then formdata will be empty!! 
 router.post('/', async (req, res) => {
@@ -16,7 +17,17 @@ router.post('/', async (req, res) => {
             
         }
         const data = new CALENDER(item)
-        await data.save()
+      const savedData =  await data.save()
+
+       if(savedData){
+        let lists = await PUPIL.find({})
+        
+        for (const pupil of lists) {
+            let result = await sendMailCalender(pupil.email, item)
+            console.log(result)
+        }
+
+      }
 
         res.json({ message: 'Data saved successfully',status:true }).status(201)
     }

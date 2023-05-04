@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const NOTICE = require('../models/announcement')
-
+const PUPIL = require('../models/pupil')
+const {sendMailNotice} = require('../helpers/mail')
 
 router.post('/', async (req, res) => {
     try {
@@ -10,10 +11,20 @@ router.post('/', async (req, res) => {
 
         let item = {
             description: req.body.description,
-            type: req.body.type
-        }
+            type: req.body.type        }
+
+
         const data = new NOTICE(item)
-        await data.save()
+      const savedData=  await data.save()
+      if(savedData){
+        let lists = await PUPIL.find({})
+        
+        for (const pupil of lists) {
+            let result = await sendMailNotice(pupil.email, item)
+            console.log(result)
+        }
+
+      }
 
         res.json({ message: 'Data saved successfully', status: true }).status(201)
     }
