@@ -20,7 +20,7 @@ export class AnnouncementListComponent {
     this.route.navigate(['dashboard/announcement-new'])
   }
   isAuthorized() {
-    return this.auth.isAdmin()
+    return this.auth.isTeacher()
   }
 
   ngOnInit() {

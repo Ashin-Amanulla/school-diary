@@ -6,6 +6,7 @@ router.use('/uploads', express.static('uploads'))  // for image and pdf reading
 
 router.use('/pupils',verifyAccessToken, require('./pupils'))
 
+
 router.use('/remarks',verifyAccessToken, require('./remarks'))
 
 router.use('/comments',verifyAccessToken, require('./comments'))
@@ -18,7 +19,7 @@ router.use('/announcements',verifyAccessToken, require('./announcements'))
 
 router.use('/auth', require('./auth'))
 
-
+router.use('/teachers', require('./teachers'))
 
 
 module.exports = router

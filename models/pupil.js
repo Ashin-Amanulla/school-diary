@@ -10,13 +10,14 @@ const pupilSchema = new Schema(
         address: { type: String },
         email: { type: String },
         password: { type: String },
-        photo: { type: String },
+        photo: {  },
         parentName: { type: String },
         parentPhoneNumber: { type: String },
         emergencyName: { type: String },
         emergencyPhoneNumber: { type: String },
         emergencyRelationship: { type: String },
-        admin:{type:Boolean, default: false}
+        admin:{type:Boolean, default: false},
+        teacher:{type:Boolean, default: false}
     },
     {
         timestamps: true,

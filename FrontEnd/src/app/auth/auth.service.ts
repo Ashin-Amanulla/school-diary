@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode"
 
 interface MyToken {
   admin: boolean,
+  teacher:boolean,
   id: string,
   login: boolean,
 
@@ -45,6 +46,21 @@ export class AuthService {
 
 
   // role check 
+  isTeacher(): boolean {
+    var token = localStorage.getItem('accessToken') || '';
+
+    try {
+      var user = jwt_decode<MyToken>(token);
+      return user.teacher ? true : false;
+
+    } catch (error) {
+      console.log('Token error', error)
+      return false
+    }
+
+  }
+
+  // role check 
   isAdmin(): boolean {
     var token = localStorage.getItem('accessToken') || '';
 
@@ -58,6 +74,7 @@ export class AuthService {
     }
 
   }
+
 
   idFetch() {
     let token = localStorage.getItem('accessToken') || '';

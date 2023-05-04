@@ -3,19 +3,23 @@ import { Router } from '@angular/router';
 import { BackendService } from '../../../backend.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/auth/auth.service';
+
+
 @Component({
-  selector: 'app-pupils-list',
-  templateUrl: './pupils-list.component.html',
-  styleUrls: ['./pupils-list.component.scss']
+  selector: 'app-teachers-list',
+  templateUrl: './teachers-list.component.html',
+  styleUrls: ['./teachers-list.component.scss']
 })
-export class PupilsListComponent {
+export class TeachersListComponent {
+
+
   constructor(private route: Router, public api: BackendService, private auth: AuthService) { }
 
   query = '';
   pupils: any
   //redirect to add form
   addItem() {
-    this.route.navigate(['dashboard/add-new'])
+    this.route.navigate(['dashboard/add-teacher'])
   }
 
   isAuthorized() {
@@ -31,7 +35,7 @@ export class PupilsListComponent {
   getItems() {
     this.api.getItems().subscribe((res: any) => {
       let list = res.data
-      this.pupils = list.filter((i: any) => !i.teacher )
+      this.pupils = list.filter((i: any) => i.teacher&&!i.admin )
     })
   }
 
@@ -50,7 +54,7 @@ export class PupilsListComponent {
       timer: 30000,
     }).then((result: any) => {
       if (result.isConfirmed) {
-        this.api.deleteItem(id).subscribe(result => {
+        this.api.deleteItem(id).subscribe((result:any) => {
           this.pupils = this.pupils.filter((item: any) => item._id !== id)
         });
 
@@ -65,7 +69,7 @@ export class PupilsListComponent {
 
   viewItem(id: any) {
     localStorage.setItem('pupil_id', id)
-    this.route.navigate(['dashboard/view-item']);
+    this.route.navigate(['dashboard/view-teacher']);
 
   }
 

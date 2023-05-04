@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         if (!isMatch) throw createError.Unauthorized('password is invalid')
 
 
-        const user = { id: pupil._id, admin: pupil.admin, login: true }
+        const user = { id: pupil._id, admin: pupil.admin, teacher: pupil.teacher, login: true }
 
         const accessToken = await signAccessToken(user)
         res.json({ token: accessToken, status: true }).status(201)

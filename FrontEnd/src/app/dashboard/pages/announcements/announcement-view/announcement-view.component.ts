@@ -35,7 +35,7 @@ export class AnnouncementViewComponent {
   }
 
   isAuthorized(): boolean {
-    return this.auth.isAdmin()
+    return this.auth.isTeacher()
   }
 
   editItem(id: any) {

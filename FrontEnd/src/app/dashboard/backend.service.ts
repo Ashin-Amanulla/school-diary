@@ -21,6 +21,11 @@ export class BackendService {
   }
 
 
+  addTeacher(teacher: any) {
+    return this.http.post(`${this.api}/teachers`, teacher)
+
+  }
+
   //get all data
 
   getItems() {

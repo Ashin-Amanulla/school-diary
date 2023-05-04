@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const moment = require('moment')
 
 const remarksSchema = new Schema({
- 
+
 
     remark: {
         type: String,
@@ -12,16 +12,17 @@ const remarksSchema = new Schema({
 
     date: {
         type: String,
-        required:true,
+        required: true,
         default: moment(Date.now()).format('MMMM Do YYYY, h:mm a')
     },
+    pdf: {  },
 
     studentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pupil',
         required: true
     }
- 
+
 }, {
     timestamps: true,
 });

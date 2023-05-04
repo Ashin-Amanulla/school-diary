@@ -9,7 +9,7 @@ export class RoleGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   
   canActivate(){
-      if (this.authService.isAdmin()) {
+      if (this.authService.isTeacher()) {
         return true;
       } else {
         alert('Unauthorized !')

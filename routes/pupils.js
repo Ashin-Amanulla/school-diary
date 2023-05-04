@@ -1,14 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const PUPIL = require('../models/pupil')
-const imgUpload = require('../middlewares/multer')
+const { imgUpload } = require('../middlewares/multer')
 const moment = require('moment')
+const fs = require('fs');
+const path = require('path');
+
 // Adding pupil data 
 // !if you dont use multer as middleware then formdata will be empty!! 
 router.post('/', imgUpload, async (req, res) => {
     try {
         if (req.body == null) throw ('No data') //error if data is null
-
+        console.log(req.files)
 
         let item = {
             fullName: req.body.fullName,
@@ -17,7 +20,7 @@ router.post('/', imgUpload, async (req, res) => {
             address: req.body.address,
             email: req.body.email,
             password: req.body.password,
-            photo: req.files?.image[0].path,
+            photo: req.files?.image?.[0].path,
             parentName: req.body.parentName,
             parentPhoneNumber: req.body.parentPhoneNumber,
             emergencyName: req.body.emergencyName,
@@ -67,9 +70,40 @@ router.get('/:_id', async (req, res) => {
 router.put('/:_id', imgUpload, async (req, res) => {
     try {
         let _id = req.params._id
-        let body = req.body
-        let updatedData = { $set: body }
-        await PUPIL.findByIdAndUpdate(_id, updatedData, { new: true })
+
+        let item = {
+            fullName: req.body.fullName,
+            dateOfBirth: moment(req.body.dateOfBirth).format("MMM Do YYYY"),
+            gender: req.body.gender,
+            address: req.body.address,
+            email: req.body.email,
+            password: req.body.password,
+            photo: req.files?.image?.[0].path,
+            parentName: req.body.parentName,
+            parentPhoneNumber: req.body.parentPhoneNumber,
+            emergencyName: req.body.emergencyName,
+            emergencyPhoneNumber: req.body.emergencyPhoneNumber,
+            emergencyRelationship: req.body.emergencyRelationship
+        }       
+         let updatedData = { $set: item }
+
+        const doesExist = await PUPIL.findById(_id)
+        console.log(doesExist)
+
+        const updated = await PUPIL.findByIdAndUpdate(_id, updatedData, { new: true })
+        if (!updated) throw new Error('Could not update')
+        // delete previous PDF file if exists
+
+        let imagePath = path.join(__dirname, '../', doesExist.photo);
+        console.log('img', imagePath)
+
+        if (fs.existsSync(imagePath)) {
+            console.log('img')
+            fs.unlinkSync(imagePath);
+        } else {
+            console.log("nothing")
+        }
+
         res.json({ message: 'updated successfully!!', status: true }).status(200)
     }
     catch (error) {

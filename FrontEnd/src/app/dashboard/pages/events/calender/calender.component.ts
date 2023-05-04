@@ -69,7 +69,7 @@ export class CalenderComponent {
   }
 
   isAuthorized():boolean {
-    return this.auth.isAdmin()
+    return this.auth.isTeacher()
   }
 
   getAllEvents(): void {
